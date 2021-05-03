@@ -5,15 +5,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <title>Dropbox</title>
 </head>
-<form action="/files" method="POST" enctype="multipart/form-data">
-    <input type="file" name="dropboxFile">
-    <button type="submit">Submit</button>
-</form>
+
+
 
 <body>
+    <div class="form-container">
+        <h1>The DropBox</h1>
+        <form action="/files" method="POST" enctype="multipart/form-data">
+            <div class="inputContainer">
 
+                <input type="file" class="file" name="dropboxFile" id="fileUpload" size="50" multiple>
+
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+
+    <ul id="name">
+    </ul>
+
+    <script>
+        function fetchData() {
+            fetch('http://localhost:3000/')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (myJson) {
+                    let name = document.getElementById("name")
+                    console.log(myJson.userInfo);
+                    for (let i = 0; i < myJson.userInfo.length; i++) {
+                        console.log(i)
+                        // // document.getElementById("name").innerHTML = myJson.userInfo[i].fileName
+                        // let btn = document.createElement("li");   // Create a <button> element
+                        // btn.innerHTML = myJson.userInfo[i].fileName;                   // Insert text
+                        // document.name.appendChild(btn)
+                        var node = document.createElement("li");
+                        var textnode = document.createTextNode(myJson.userInfo[i].fileName);
+                        node.appendChild(textnode);
+                        name.appendChild(node)
+                    }
+                })
+        }
+        fetchData()
+
+    </script>
 </body>
+
+
 
 </html>
